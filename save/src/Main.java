@@ -20,7 +20,8 @@ public class Main {
             listZip.add(item.getName());
         }
 
-        zipFiles("C:\\Users\\User\\Documents\\Netology\\java core\\HW\\Games\\savegames\\zip.zip", listZip);
+        zipFiles("C:\\Users\\User\\Documents\\Netology\\java core\\HW\\Games\\savegames\\zip.zip", listZip, savegames);
+
     }
 
     public static void saveGame(String path, GameProgress gameProgress) throws FileNotFoundException {
@@ -31,7 +32,7 @@ public class Main {
         }
     }
 
-    public static void zipFiles(String path, List<String> list) {
+    public static void zipFiles(String path, List<String> list, File file) {
 
         try (ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(path));
              FileInputStream fileInputStream = new FileInputStream(path)) {
@@ -39,13 +40,21 @@ public class Main {
                 ZipEntry entry = new ZipEntry(list.get(i));
                 zipOutputStream.putNextEntry(entry);
             }
-
             byte[] buffer = new byte[fileInputStream.available()];
             fileInputStream.read(buffer);
             zipOutputStream.write(buffer);
             zipOutputStream.close();
+// добалено использование метода delete
+            delete(file);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+// добавлен метод по удалению файлов с определенным расширением
+    public static void delete(File file) {
+        for (File f : file.listFiles()) {
+            if (file.getName().contains(".dat")) ;
+            f.delete();
         }
     }
 }
