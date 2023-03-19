@@ -44,17 +44,22 @@ public class Main {
             fileInputStream.read(buffer);
             zipOutputStream.write(buffer);
             zipOutputStream.close();
-// добалено использование метода delete
-            delete(file);
+    // добалено использование метода delete
+            delete(file, list);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-// добавлен метод по удалению файлов с определенным расширением
-    public static void delete(File file) {
-        for (File f : file.listFiles()) {
-            if (file.getName().contains(".dat")) ;
-            f.delete();
+
+    // добавлен метод по удалению файлов
+    public static void delete(File file, List<String> list) {
+        for (int i = 0; i < list.size(); i++) {
+            for (File f : file.listFiles()) {
+                if (f.getName().equals(list.get(i))) {
+                    f.delete();
+                }
+            }
+
         }
     }
 }
